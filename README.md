@@ -12,6 +12,7 @@ Dockerized REST API simulation of a card deck
 - Node 18 + Express 4
 - Typescript 5
 - Redis
+- Jest + Supertest
 
 ## Docker
 ### Build
