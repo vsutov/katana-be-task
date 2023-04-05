@@ -54,9 +54,15 @@ export class DeckController {
   public drawCardsFromDeck = async (req: Request, res: CustomResponse<DrawFromDeckResponse>, next: NextFunction): Promise<void> => {
     try {
       const { deckId }: { deckId: string } = validateUsingSchema(req.params, schemas.drawFromDeck.params)
-      const { cardCodes }: Deck = await this.redisService.getDeck(deckId)
+      const { cardCodes, shuffled, type }: Deck = await this.redisService.getDeck(deckId)
       const { count }: { count: number } = validateUsingSchema(req.body, schemas.drawFromDeck.body, { remaining: cardCodes.length })
-      const drawnCards = this.deckService.drawCards(cardCodes, count)
+      const { drawnCards, remainingCards } = this.deckService.drawCards(cardCodes, count)
+
+      if (remainingCards.length === 0) {
+        await this.redisService.deleteDeck(deckId)
+      } else {
+        await this.redisService.setDeck(remainingCards, type, shuffled, deckId)
+      }
 
       res.json({
         cards: formatCardCodesIntoCards(drawnCards)

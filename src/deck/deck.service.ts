@@ -26,12 +26,16 @@ export class DeckService {
     return cardCodes
   }
 
-  public drawCards (cardCodes: CardCode[], drawnCount: number): CardCode[] {
+  public drawCards (cardCodes: CardCode[], drawnCount: number): { drawnCards: CardCode[], remainingCards: CardCode[] } {
     const cardsRemaining: number = cardCodes.length
     const cardsDrawingOffset = cardsRemaining - drawnCount
 
-    const drawnCards: CardCode[] = cardCodes.slice(cardsDrawingOffset).reverse()
+    const [remainingCards, drawnCards]: [CardCode[], CardCode[]] =
+     [cardCodes.slice(0, cardsDrawingOffset), cardCodes.slice(cardsDrawingOffset).reverse()]
 
-    return drawnCards
+    return {
+      drawnCards,
+      remainingCards
+    }
   }
 }

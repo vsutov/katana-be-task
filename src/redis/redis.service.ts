@@ -50,7 +50,7 @@ export class RedisService {
     }
   }
 
-  public deleteDeck = async (deckId: string): Promise<void> => { // TODO: maybe not needed?
+  public deleteDeck = async (deckId: string): Promise<void> => {
     try {
       await this.client.del(deckId)
     } catch (e) {
