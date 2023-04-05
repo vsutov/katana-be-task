@@ -6,6 +6,10 @@ export interface DeckBase {
   shuffled: boolean
 }
 
+export interface Deck extends DeckBase {
+  cardCodes: CardCode[]
+}
+
 type CardCodeString<Suits extends Map<string, string>, Values extends Map<string, string>>
     = `${keyof Suits & string}${keyof Values & string}`
 
