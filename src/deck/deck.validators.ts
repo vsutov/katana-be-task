@@ -1,4 +1,4 @@
-import { throwCustomError } from 'errors'
+import { throwCustomError } from '../errors'
 import * as yup from 'yup'
 import { StatusCodes } from 'http-status-codes'
 import { DeckTypeEnum } from './deck.enums'

@@ -1,6 +1,6 @@
 import express, { type Express } from 'express'
 import { DeckController } from './deck/deck.controller'
-import errorHandler from 'errors'
+import { errorHandler } from './errors'
 
 const app: Express = express()
 const deckController = new DeckController()

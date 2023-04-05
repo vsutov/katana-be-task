@@ -1,6 +1,6 @@
 import request from 'supertest'
 import app from '../..'
-import { DeckTypeEnum } from 'deck/deck.enums'
+import { DeckTypeEnum } from '../../deck/deck.enums'
 
 describe('API', () => {
   describe('POST /deck', () => {
