@@ -77,8 +77,8 @@ describe('API', () => {
       expect(body.type).toEqual(DeckTypeEnum.FULL)
       expect(body.cards).toBeDefined()
       expect(body.cards[0]).toStrictEqual({
-        code: 'AC',
-        suit: 'CLUBS',
+        code: 'AS',
+        suit: 'SPADES',
         value: 'ACE'
       })
     })
@@ -122,9 +122,9 @@ describe('API', () => {
       expect(status).toEqual(200)
       expect(body.cards).toBeDefined()
       expect(body.cards[0]).toStrictEqual({
-        code: 'KD',
-        suit: 'DIAMONDS',
-        value: 'KING'
+        code: 'AH',
+        suit: 'HEARTS',
+        value: 'ACE'
       })
     })
 

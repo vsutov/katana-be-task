@@ -7,8 +7,14 @@ export class DeckService {
     let cardCodes: CardCode[] = []
 
     for (const cardSuitCode of CARD_SUITS.keys()) {
-      for (const cardValueCode of CARD_VALUES.keys()) {
-        cardCodes.push(`${cardValueCode}${cardSuitCode}` as CardCode)
+      if (['C', 'H'].includes(cardSuitCode)) {
+        for (const cardValueCode of [...CARD_VALUES.keys()].reverse()) {
+          cardCodes.push(`${cardValueCode}${cardSuitCode}` as CardCode)
+        }
+      } else {
+        for (const cardValueCode of CARD_VALUES.keys()) {
+          cardCodes.push(`${cardValueCode}${cardSuitCode}` as CardCode)
+        }
       }
     }
 

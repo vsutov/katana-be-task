@@ -1,8 +1,8 @@
 export const CARD_SUITS = new Map<string, string>([
-  ['C', 'CLUBS'],
-  ['H', 'HEARTS'],
   ['S', 'SPADES'],
-  ['D', 'DIAMONDS']
+  ['D', 'DIAMONDS'],
+  ['C', 'CLUBS'],
+  ['H', 'HEARTS']
 ])
 
 export const CARD_VALUES = new Map<string, string>([
