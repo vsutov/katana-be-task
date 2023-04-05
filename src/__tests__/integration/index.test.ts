@@ -189,4 +189,26 @@ describe('API', () => {
       expect(body.error.message).toEqual('Count must be between 1 and the remaining amount of cards')
     })
   })
+
+  it('should 404 after all cards have been drawn from the deck', async () => {
+    const { body: createDeckResponseBody } = await createDeck({ shuffled: false, type: DeckTypeEnum.FULL })
+
+    const { deckId } = createDeckResponseBody
+
+    const firstDrawResponse = await request(app)
+      .patch(`/deck/${deckId as string}`)
+      .send({
+        count: 52
+      })
+
+    expect(firstDrawResponse.status).toEqual(200)
+
+    const secondDrawResponse = await request(app)
+      .patch(`/deck/${deckId as string}`)
+      .send({
+        count: 52
+      })
+
+    expect(secondDrawResponse.status).toEqual(404)
+  })
 })
