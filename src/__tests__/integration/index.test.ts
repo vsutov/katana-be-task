@@ -104,4 +104,89 @@ describe('API', () => {
       expect(body.error.message).toEqual('deckId is not a valid UUID v4')
     })
   })
+
+  describe('PATCH /deck/:deckId', () => {
+    it('should draw from existing deck', async () => {
+      const { body: createDeckResponseBody } = await createDeck({ shuffled: false, type: DeckTypeEnum.FULL })
+
+      const { deckId } = createDeckResponseBody
+
+      const response = await request(app)
+        .patch(`/deck/${deckId as string}`)
+        .send({
+          count: 1
+        })
+
+      const { status, body } = response
+
+      expect(status).toEqual(200)
+      expect(body.cards).toBeDefined()
+      expect(body.cards[0]).toStrictEqual({
+        code: 'KD',
+        suit: 'DIAMONDS',
+        value: 'KING'
+      })
+    })
+
+    it('should 404 on non-existant deck', async () => {
+      const randomUuidV4 = v4()
+
+      const response = await request(app)
+        .patch(`/deck/${randomUuidV4}`)
+        .send({
+          count: 1
+        })
+
+      expect(response.status).toEqual(404)
+    })
+
+    it('should 422 on invalid deckId in request', async () => {
+      const deckId = 'some-invalid-uuid'
+
+      const response = await request(app)
+        .patch(`/deck/${deckId}`)
+        .send({
+          count: 1
+        })
+
+      const { status, body } = response
+
+      expect(status).toEqual(422)
+      expect(body.error.message).toEqual('deckId is not a valid UUID v4')
+    })
+
+    it('should 422 if count is over the amount of cards in deck', async () => {
+      const { body: createDeckResponseBody } = await createDeck({ shuffled: false, type: DeckTypeEnum.FULL })
+
+      const { deckId } = createDeckResponseBody
+
+      const response = await request(app)
+        .patch(`/deck/${deckId as string}`)
+        .send({
+          count: 1000
+        })
+
+      const { status, body } = response
+
+      expect(status).toEqual(422)
+      expect(body.error.message).toEqual('Count must be between 1 and the remaining amount of cards')
+    })
+
+    it('should 422 if count is less than 1', async () => {
+      const { body: createDeckResponseBody } = await createDeck({ shuffled: false, type: DeckTypeEnum.FULL })
+
+      const { deckId } = createDeckResponseBody
+
+      const response = await request(app)
+        .patch(`/deck/${deckId as string}`)
+        .send({
+          count: 0
+        })
+
+      const { status, body } = response
+
+      expect(status).toEqual(422)
+      expect(body.error.message).toEqual('Count must be between 1 and the remaining amount of cards')
+    })
+  })
 })
