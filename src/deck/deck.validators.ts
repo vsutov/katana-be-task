@@ -19,6 +19,15 @@ export const schemas = {
             return validateUuidv4(value)
           })
       }).required()
+  },
+  drawFromDeck: {
+    params: yup
+      .object({
+        deckId: yup.string().required().trim().test('valid-uuid',
+          'deckId is not a valid UUID v4', function (value) {
+            return validateUuidv4(value)
+          })
+      }).required()
   }
 }
 

@@ -46,4 +46,19 @@ export class DeckController {
       next(e)
     }
   }
+
+  public drawCardsFromDeck = async (req: Request, res: CustomResponse<any>, next: NextFunction): Promise<void> => { // TODO: type
+    try {
+      const { deckId }: { deckId: string } = validateUsingSchema(req.params, schemas.drawFromDeck.params)
+      const { count } = req.body // TODO: validate
+      const { cardCodes }: Deck = await this.redisService.getDeck(deckId)
+      const drawnCards = this.deckService.drawCards(cardCodes, count)
+
+      res.json({
+        cards: formatCardCodesIntoCards(drawnCards)
+      })
+    } catch (e) {
+      next(e)
+    }
+  }
 }

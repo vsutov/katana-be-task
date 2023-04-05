@@ -9,6 +9,7 @@ app.use(express.json())
 
 app.post('/deck', deckController.createDeck)
 app.get('/deck/:deckId', deckController.openDeck)
+app.patch('/deck/:deckId', deckController.drawCardsFromDeck)
 
 app.use(errorHandler)
 
