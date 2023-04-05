@@ -1,10 +1,16 @@
 FROM node:18
 
-WORKDIR /app
+WORKDIR /usr/src/app
+
+RUN chown node:node ./
+
+USER node
+
+ARG NODE_ENV=production
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci && npm cache clean --force
 
 COPY . .
 
@@ -12,4 +18,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "./dist/index.js"]
