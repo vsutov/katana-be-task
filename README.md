@@ -6,6 +6,7 @@ Dockerized REST API simulation of a card deck
 - Create a new Deck:
 	- `POST /deck`
 - Open a Deck
+    - `GET /deck/:deckId/`
 - Draw a Card
 
 
