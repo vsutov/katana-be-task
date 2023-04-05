@@ -8,6 +8,7 @@ Dockerized REST API simulation of a card deck
 - Open a Deck
     - `GET /deck/:deckId/`
 - Draw a Card
+    - `PATCH /deck/:deckId/`
 
 
 ## Technologies used

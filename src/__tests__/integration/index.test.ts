@@ -4,16 +4,15 @@ import { DeckTypeEnum } from '../../deck/deck.enums'
 import { v4 } from 'uuid'
 
 describe('API', () => {
+  const createDeck = async (payload: Record<string, any>) => {
+    return await request(app)
+      .post('/deck')
+      .send(payload)
+  }
+
   describe('POST /deck', () => {
     it('should create a new unshuffled full deck', async () => {
-      const response = await request(app)
-        .post('/deck')
-        .send({
-          shuffled: false,
-          type: DeckTypeEnum.FULL
-        })
-
-      const { status, body } = response
+      const { status, body } = await createDeck({ shuffled: false, type: DeckTypeEnum.FULL })
 
       expect(status).toEqual(200)
       expect(body.deckId).toBeDefined()
@@ -23,14 +22,7 @@ describe('API', () => {
     })
 
     it('should create a new shuffled full deck', async () => {
-      const response = await request(app)
-        .post('/deck')
-        .send({
-          shuffled: true,
-          type: DeckTypeEnum.FULL
-        })
-
-      const { status, body } = response
+      const { status, body } = await createDeck({ shuffled: true, type: DeckTypeEnum.FULL })
 
       expect(status).toEqual(200)
       expect(body.deckId).toBeDefined()
@@ -40,14 +32,7 @@ describe('API', () => {
     })
 
     it('should create a new unshuffled short deck', async () => {
-      const response = await request(app)
-        .post('/deck')
-        .send({
-          shuffled: false,
-          type: DeckTypeEnum.SHORT
-        })
-
-      const { status, body } = response
+      const { status, body } = await createDeck({ shuffled: false, type: DeckTypeEnum.SHORT })
 
       expect(status).toEqual(200)
       expect(body.deckId).toBeDefined()
@@ -57,14 +42,7 @@ describe('API', () => {
     })
 
     it('should create a new shuffled short deck', async () => {
-      const response = await request(app)
-        .post('/deck')
-        .send({
-          shuffled: true,
-          type: DeckTypeEnum.SHORT
-        })
-
-      const { status, body } = response
+      const { status, body } = await createDeck({ shuffled: true, type: DeckTypeEnum.SHORT })
 
       expect(status).toEqual(200)
       expect(body.deckId).toBeDefined()
@@ -74,13 +52,7 @@ describe('API', () => {
     })
 
     it('should 422 on invalid request', async () => {
-      const response = await request(app)
-        .post('/deck')
-        .send({
-          shuffled: true
-        })
-
-      const { status, body } = response
+      const { status, body } = await createDeck({ shuffled: true })
 
       expect(status).toEqual(422)
       expect(body.error.message).toEqual('type is a required field')
@@ -89,14 +61,9 @@ describe('API', () => {
 
   describe('GET /deck/:deckId', () => {
     it('should open an existing deck', async () => {
-      const createResponse = await request(app)
-        .post('/deck')
-        .send({
-          shuffled: false,
-          type: DeckTypeEnum.FULL
-        })
+      const { body: createDeckResponseBody } = await createDeck({ shuffled: false, type: DeckTypeEnum.FULL })
 
-      const { deckId } = createResponse.body
+      const { deckId } = createDeckResponseBody
 
       const response = await request(app)
         .get(`/deck/${deckId as string}`)
