@@ -25,4 +25,13 @@ export class DeckService {
 
     return cardCodes
   }
+
+  public drawCards (cardCodes: CardCode[], drawnCount: number): CardCode[] {
+    const cardsRemaining: number = cardCodes.length
+    const cardsDrawingOffset = cardsRemaining - drawnCount
+
+    const drawnCards: CardCode[] = cardCodes.slice(cardsDrawingOffset).reverse()
+
+    return drawnCards
+  }
 }
