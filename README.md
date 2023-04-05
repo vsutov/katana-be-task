@@ -20,10 +20,10 @@ Dockerized REST API simulation of a card deck
 
 ## Docker
 ### Build
-`docker-compose build`
+`docker compose build`
 
 ### Run
-`docker-compose run app`
+`docker compose run app`
 
 ### Tests
-`docker-compose run tests`
+`docker compose run tests`

@@ -20,7 +20,7 @@ export const schemas = {
           })
       }).required()
   },
-  drawFromDeck: {
+  drawCardsFromDeck: {
     params: yup
       .object({
         deckId: yup.string().required().trim().test('valid-uuid',
@@ -38,7 +38,7 @@ export const schemas = {
   }
 }
 
-export const validateUsingSchema = (input: any, schema: yup.Schema, context?: Record<string, any>) => { // TODO: type?
+export const validateUsingSchema = (input: any, schema: yup.Schema, context?: Record<string, any>) => {
   try {
     return schema.validateSync(input, { stripUnknown: true, context })
   } catch (e) {
