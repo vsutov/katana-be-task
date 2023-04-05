@@ -3,7 +3,8 @@
 
 Dockerized REST API simulation of a card deck
 
-- Create a new Deck
+- Create a new Deck:
+	- `POST /deck`
 - Open a Deck
 - Draw a Card
 

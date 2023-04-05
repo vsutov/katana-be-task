@@ -3,6 +3,11 @@
     "target": "ES6",
     "module": "commonjs",
     "outDir": "./dist",
+    "baseUrl": "src",
+    "paths": {
+        "@deck*/": ["deck/"],
+        "@redis*/": ["redis/"],
+    },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
