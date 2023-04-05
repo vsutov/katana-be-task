@@ -27,13 +27,20 @@ export const schemas = {
           'deckId is not a valid UUID v4', function (value) {
             return validateUuidv4(value)
           })
+      }).required(),
+    body: yup
+      .object({
+        count: yup.number().required().test('variable-count',
+          'Count must be between 1 and the remaining amount of cards', function (value) {
+            return value >= 1 && value <= this.options?.context?.remaining
+          })
       }).required()
   }
 }
 
-export const validateUsingSchema = (input: any, schema: yup.Schema) => { // TODO: type?
+export const validateUsingSchema = (input: any, schema: yup.Schema, context?: Record<string, any>) => { // TODO: type?
   try {
-    return schema.validateSync(input, { stripUnknown: true })
+    return schema.validateSync(input, { stripUnknown: true, context })
   } catch (e) {
     const error = e as yup.ValidationError
 
