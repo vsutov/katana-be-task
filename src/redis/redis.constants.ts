@@ -1,0 +1,1 @@
+export const REDIS_KEY_EXPIRATION_S = 3600

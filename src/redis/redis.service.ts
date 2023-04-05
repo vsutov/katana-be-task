@@ -4,6 +4,7 @@ import { throwCustomError } from '../errors'
 import { StatusCodes, ReasonPhrases } from 'http-status-codes'
 import Redis from 'ioredis'
 import { v4 } from 'uuid'
+import { REDIS_KEY_EXPIRATION_S } from './redis.constants'
 
 export class RedisService {
   private readonly client: Redis
@@ -21,7 +22,7 @@ export class RedisService {
     })
 
     try {
-      await this.client.set(cacheKey, deckString, 'EX', 3600)
+      await this.client.set(cacheKey, deckString, 'EX', REDIS_KEY_EXPIRATION_S)
 
       return cacheKey
     } catch (e) {
