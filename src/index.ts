@@ -8,6 +8,7 @@ const deckController = new DeckController()
 app.use(express.json())
 
 app.post('/deck', deckController.createDeck)
+app.get('/deck/:deckId', deckController.openDeck)
 
 app.use(errorHandler)
 

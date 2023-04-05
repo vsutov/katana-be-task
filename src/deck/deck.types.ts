@@ -16,6 +16,12 @@ type CardCodeString<Suits extends Map<string, string>, Values extends Map<string
 
 export type CardCode = CardCodeString<typeof CARD_SUITS, typeof CARD_VALUES>
 
+export interface Card {
+  code: CardCode
+  value: typeof CARD_VALUES[keyof typeof CARD_VALUES]
+  suit: typeof CARD_SUITS[keyof typeof CARD_SUITS]
+}
+
 type Send<ResBody = any, T = Response<ResBody>> = (body?: ResBody) => T
 
 export interface CustomResponse<T> extends Response {
@@ -27,4 +33,12 @@ export interface CreateDeckResponse {
   shuffled: boolean
   deckId: string
   remaining: number
+}
+
+export interface OpenDeckResponse {
+  type: DeckTypeEnum
+  shuffled: boolean
+  deckId: string
+  remaining: number
+  cards: Card[]
 }

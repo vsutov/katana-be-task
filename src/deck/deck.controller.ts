@@ -1,8 +1,13 @@
 import { type NextFunction, type Request } from 'express'
 import { schemas, validateUsingSchema } from './deck.validators'
-import { type CustomResponse, type CardCode, type DeckBase, type CreateDeckResponse } from './deck.types'
+import {
+  type CustomResponse,
+  type CardCode,
+  type DeckBase, type CreateDeckResponse, type Deck, type OpenDeckResponse
+} from './deck.types'
 import { DeckService } from './deck.service'
 import { RedisService } from '../redis/redis.service'
+import { formatCardCodesIntoCards } from './deck.helpers'
 
 export class DeckController {
   private readonly deckService = new DeckService()
@@ -19,6 +24,23 @@ export class DeckController {
         type,
         shuffled,
         remaining: cardCodes.length
+      })
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  public openDeck = async (req: Request, res: CustomResponse<OpenDeckResponse>, next: NextFunction): Promise<void> => {
+    try {
+      const { deckId }: { deckId: string } = validateUsingSchema(req.params, schemas.openDeck.params)
+      const { shuffled, type, cardCodes }: Deck = await this.redisService.getDeck(deckId)
+
+      res.json({
+        deckId,
+        type,
+        shuffled,
+        remaining: cardCodes.length,
+        cards: formatCardCodesIntoCards(cardCodes)
       })
     } catch (e) {
       next(e)
