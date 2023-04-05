@@ -10,3 +10,10 @@ services:
       - redis
   redis:
     image: redis
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - app
+      - redis
