@@ -1,5 +1,6 @@
 import request from 'supertest'
 import app from '../..'
+import { DeckTypeEnum } from 'deck/deck.enums'
 
 describe('API', () => {
   describe('POST /deck', () => {
@@ -8,7 +9,7 @@ describe('API', () => {
         .post('/deck')
         .send({
           shuffled: false,
-          type: 'FULL'
+          type: DeckTypeEnum.FULL
         })
 
       const { status, body } = response
@@ -17,7 +18,7 @@ describe('API', () => {
       expect(body.deckId).toBeDefined()
       expect(body.remaining).toEqual(52)
       expect(body.shuffled).toBeFalsy()
-      expect(body.type).toEqual('FULL')
+      expect(body.type).toEqual(DeckTypeEnum.FULL)
     })
 
     it('should create a new shuffled full deck', async () => {
@@ -25,7 +26,7 @@ describe('API', () => {
         .post('/deck')
         .send({
           shuffled: true,
-          type: 'FULL'
+          type: DeckTypeEnum.FULL
         })
 
       const { status, body } = response
@@ -34,7 +35,7 @@ describe('API', () => {
       expect(body.deckId).toBeDefined()
       expect(body.remaining).toEqual(52)
       expect(body.shuffled).toBeTruthy()
-      expect(body.type).toEqual('FULL')
+      expect(body.type).toEqual(DeckTypeEnum.FULL)
     })
 
     it('should create a new unshuffled short deck', async () => {
@@ -42,7 +43,7 @@ describe('API', () => {
         .post('/deck')
         .send({
           shuffled: false,
-          type: 'SHORT'
+          type: DeckTypeEnum.SHORT
         })
 
       const { status, body } = response
@@ -51,7 +52,7 @@ describe('API', () => {
       expect(body.deckId).toBeDefined()
       expect(body.remaining).toEqual(32)
       expect(body.shuffled).toBeFalsy()
-      expect(body.type).toEqual('SHORT')
+      expect(body.type).toEqual(DeckTypeEnum.SHORT)
     })
 
     it('should create a new shuffled short deck', async () => {
@@ -59,7 +60,7 @@ describe('API', () => {
         .post('/deck')
         .send({
           shuffled: true,
-          type: 'SHORT'
+          type: DeckTypeEnum.SHORT
         })
 
       const { status, body } = response
@@ -68,7 +69,7 @@ describe('API', () => {
       expect(body.deckId).toBeDefined()
       expect(body.remaining).toEqual(32)
       expect(body.shuffled).toBeTruthy()
-      expect(body.type).toEqual('SHORT')
+      expect(body.type).toEqual(DeckTypeEnum.SHORT)
     })
 
     it('should 422 on invalid request', async () => {
