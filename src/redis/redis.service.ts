@@ -1,5 +1,5 @@
 import { type DeckTypeEnum } from '../deck/deck.enums'
-import { type CardCode } from '../deck/deck.types'
+import { type Deck, type CardCode } from '../deck/deck.types'
 import { throwCustomError } from '../errors'
 import { StatusCodes, ReasonPhrases } from 'http-status-codes'
 import Redis from 'ioredis'
@@ -32,7 +32,7 @@ export class RedisService {
     }
   }
 
-  public getDeck = async (deckId: string): Promise<unknown> => { // TODO: type!
+  public getDeck = async (deckId: string): Promise<Deck> => {
     try {
       const deckString = await this.client.get(deckId)
 
