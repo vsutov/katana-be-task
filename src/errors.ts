@@ -1,7 +1,7 @@
 import { type Request, type Response, type NextFunction } from 'express'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
-export interface CustomError extends Error {
+interface CustomError extends Error {
   status?: StatusCodes
 }
 
