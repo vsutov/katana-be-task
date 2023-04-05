@@ -3,7 +3,11 @@ import { schemas, validateUsingSchema } from './deck.validators'
 import {
   type CustomResponse,
   type CardCode,
-  type DeckBase, type CreateDeckResponse, type Deck, type OpenDeckResponse
+  type DeckBase,
+  type CreateDeckResponse,
+  type Deck,
+  type OpenDeckResponse,
+  type DrawFromDeckResponse
 } from './deck.types'
 import { DeckService } from './deck.service'
 import { RedisService } from '../redis/redis.service'
@@ -47,7 +51,7 @@ export class DeckController {
     }
   }
 
-  public drawCardsFromDeck = async (req: Request, res: CustomResponse<any>, next: NextFunction): Promise<void> => { // TODO: type
+  public drawCardsFromDeck = async (req: Request, res: CustomResponse<DrawFromDeckResponse>, next: NextFunction): Promise<void> => {
     try {
       const { deckId }: { deckId: string } = validateUsingSchema(req.params, schemas.drawFromDeck.params)
       const { count } = req.body // TODO: validate

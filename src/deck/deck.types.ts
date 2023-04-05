@@ -42,3 +42,7 @@ export interface OpenDeckResponse {
   remaining: number
   cards: Card[]
 }
+
+export interface DrawFromDeckResponse {
+  cards: Card[]
+}
