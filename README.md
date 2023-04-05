@@ -1,7 +1,7 @@
 
 #  Katana Backend Programming Test
 
-REST API to simulate a deck of cards
+Dockerized REST API simulation of a card deck
 
 - Create a new Deck
 - Open a Deck
@@ -9,6 +9,6 @@ REST API to simulate a deck of cards
 
 
 ## Technologies used
-- Node 18 + Express
-- Typescript
+- Node 18 + Express 4
+- Typescript 5
 - Redis
