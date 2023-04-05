@@ -13,8 +13,8 @@ export class RedisService {
     this.client = new Redis({ host: 'redis' })
   }
 
-  public setDeck = async (cardCodes: CardCode[], type: DeckTypeEnum, shuffled: boolean): Promise<string> => { // TODO: reuse for update? pass deckId?
-    const cacheKey = v4()
+  public setDeck = async (cardCodes: CardCode[], type: DeckTypeEnum, shuffled: boolean, deckId?: string): Promise<string> => {
+    const cacheKey = deckId ?? v4()
     const deckString = JSON.stringify({
       type,
       shuffled,
