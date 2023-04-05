@@ -14,6 +14,7 @@ Dockerized REST API simulation of a card deck
 - Typescript 5
 - Redis
 - Jest + Supertest
+- Yup
 
 ## Docker
 ### Build
